@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: true,
       minlength: 2,
-      maxlength: 50
+      maxlength: 50,
     },
 
     email: {
@@ -22,14 +22,18 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
     },
 
     password: {
       type: String,
       required: true,
       minlength: 6,
-      select: false // very important (hide by default)
+      select: false, // very important (hide by default)
+    },
+    tokenVersion: {
+      type: Number,
+      default: 0,
     },
 
     // =====================
@@ -39,7 +43,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["user", "admin"],
-      default: "user"
+      default: "user",
     },
 
     // =====================
@@ -48,12 +52,12 @@ const userSchema = new mongoose.Schema(
 
     isVerified: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     isActive: {
       type: Boolean,
-      default: true
+      default: true,
     },
 
     // =====================
@@ -66,11 +70,12 @@ const userSchema = new mongoose.Schema(
     passwordResetExpires: Date,
 
     emailVerificationToken: String,
-    emailVerificationExpires: Date
+    emailVerificationExpires: Date,
+    lastLogin: Date,
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 //
