@@ -2,12 +2,13 @@
 
 import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
+import ApiError from "../utils/ApiError.js";
+import env from "../config/env.js";
 
 const protect = async (req, res, next) => {
   try {
     let token;
 
-    // 1️⃣ Check Authorization header
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
@@ -16,39 +17,27 @@ const protect = async (req, res, next) => {
     }
 
     if (!token) {
-      const error = new Error("Not authorized. No token provided.");
-      error.statusCode = 401;
-      throw error;
+      throw new ApiError(401, "Not authorized. No token provided.");
     }
 
-    // 2️⃣ Verify token
     const decoded = jwt.verify(
       token,
-      process.env.JWT_ACCESS_SECRET
+      env.jwtAccessSecret
     );
 
-    // 3️⃣ Find user
     const user = await User.findById(decoded.sub);
 
     if (!user) {
-      const error = new Error("User no longer exists.");
-      error.statusCode = 401;
-      throw error;
+      throw new ApiError(401, "User no longer exists.");
     }
 
-    // 4️⃣ Check if account is active
     if (!user.isActive) {
-      const error = new Error("Account is deactivated.");
-      error.statusCode = 403;
-      throw error;
+      throw new ApiError(403, "Account is deactivated.");
     }
 
-    // 5️⃣ Attach user to request
     req.user = user;
-
     next();
   } catch (error) {
-    error.statusCode = error.statusCode || 401;
     next(error);
   }
 };

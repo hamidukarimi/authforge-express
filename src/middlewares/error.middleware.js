@@ -1,4 +1,5 @@
 // src/middlewares/error.middleware.js
+import env from "../config/env.js";
 
 const errorMiddleware = (err, req, res, next) => {
   console.error(err);
@@ -9,7 +10,7 @@ const errorMiddleware = (err, req, res, next) => {
     success: false,
     message: err.message || "Internal Server Error",
     stack:
-      process.env.NODE_ENV === "development"
+      env.nodeEnv === "development"
         ? err.stack
         : undefined
   });

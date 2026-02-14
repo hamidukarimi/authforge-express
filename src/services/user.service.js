@@ -4,16 +4,16 @@ import {
   generateAccessToken,
   generateRefreshToken
 } from "../utils/jwt.js";
+import ApiError from "../utils/ApiError.js";
 
 export const createUser = async (userData) => {
   const { name, email, password } = userData;
 
   const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    const error = new Error("Email already registered");
-    error.statusCode = 400;
-    throw error;
-  }
+
+    if (existingUser) {
+      throw new ApiError(400, "Email already registered");
+    }
 
   const user = await User.create({
     name,

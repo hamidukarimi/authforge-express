@@ -6,13 +6,11 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
-import userRoutes from "./routes/user.routes.js";
-import sessionRoutes from "./routes/session.routes.js";
-import refreshRoutes from "./routes/refresh.routes.js";
-import logoutRoutes from "./routes/logout.routes.js";
+import routes from "./routes/index.js";
 
 
 import errorMiddleware from "./middlewares/error.middleware.js";
+import env from "./config/env.js";
 
 const app = express();
 
@@ -29,14 +27,11 @@ app.use(express.json()); // Parse JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-if (process.env.NODE_ENV === "development") {
+if (env.nodeEnv === "development") {
   app.use(morgan("dev")); // Logging only in dev
 }
 
-app.use("/api/users", userRoutes);
-app.use("/api/sessions", sessionRoutes);
-app.use("/api/token", refreshRoutes);
-app.use("/api/logout", logoutRoutes);
+app.use("/api", routes);
 
 // =======================
 // Health Check Route

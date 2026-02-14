@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import env from "../config/env.js";
 
 
 
@@ -8,9 +9,9 @@ export const generateAccessToken = (user) => {
       sub: user._id.toString(),
       role: user.role,
     },
-    process.env.JWT_ACCESS_SECRET,
+    env.jwtAccessSecret,
     {
-      expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || "10s",
+      expiresIn: env.jwtAccessExpiresIn || "10s",
       issuer: "your-app-name",
       audience: "your-app-users",
     },
@@ -25,9 +26,9 @@ export const generateRefreshToken = (user) => {
       sub: user._id.toString(),
       tokenVersion: user.tokenVersion,
     },
-    process.env.JWT_REFRESH_SECRET,
+    env.jwtRefreshSecret,
     {
-      expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "7d",
+      expiresIn: env.jwtRefreshExpiresIn || "7d",
       issuer: "your-app",
       audience: "your-users",
     }
