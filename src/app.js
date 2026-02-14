@@ -5,10 +5,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-
 import routes from "./routes/index.js";
-
-
 import errorMiddleware from "./middlewares/error.middleware.js";
 import env from "./config/env.js";
 
@@ -19,10 +16,12 @@ const app = express();
 // =======================
 
 app.use(helmet()); // Security headers
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json()); // Parse JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -40,18 +39,10 @@ app.use("/api", routes);
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "success",
-    message: "AuthForge Express API is running 🚀"
+    message: "AuthForge Express API is running 🚀",
   });
 });
 
-
-
-
-// =======================
-// Routes (we'll add later)
-// =======================
-
-// app.use("/api/auth", authRoutes);
 
 // =======================
 // Global Error Handler

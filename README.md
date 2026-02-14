@@ -1,0 +1,180 @@
+# AuthForge Express
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A **production-ready, open-source authentication backend** built with **Node.js**, **Express.js**, and **MongoDB**.  
+It includes JWT-based authentication, refresh tokens with database sessions, role-based access control, rate limiting, and password management. Designed for **real-world projects** and easily extendable.
+
+---
+
+## 🔹 Features
+
+- ✅ **User registration & login** with hashed passwords  
+- ✅ **JWT authentication** (access + refresh tokens)  
+- ✅ **Database-backed refresh tokens** (sessions stored in MongoDB)  
+- ✅ **Role-based authorization** (`user` & `admin`)  
+- ✅ **Password change & session invalidation**  
+- ✅ **Logout & logout-all devices**  
+- ✅ **Rate limiting per IP** (prevents brute force login)  
+- ✅ **Error handling with standardized `ApiError`**  
+- ✅ **Environment configuration centralization** (`env.js`)  
+- ✅ **RESTful API design**  
+- ✅ **Ready for production deployment**  
+
+---
+
+## 🔹 Tech Stack
+
+- **Node.js** (v18+)  
+- **Express.js**  
+- **MongoDB** (local or Atlas)  
+- **Mongoose**  
+- **JWT** for authentication  
+- **Bcrypt** for password hashing  
+- **dotenv** for environment variables  
+- **Nodemon** for development  
+
+---
+
+## 🔹 Project Structure
+
+src/
+├─ config/
+│ ├─ db.js
+│ └─ env.js
+├─ controllers/
+│ ├─ logout.controller.js
+│ ├─ refresh.controller.js
+│ ├─ session.controller.js
+│ └─ user.controller.js
+├─ middlewares/
+│ ├─ auth.middleware.js
+│ ├─ error.middleware.js
+│ ├─ rateLimit.middleware.js
+│ ├─ role.middleware.js
+│ └─ validate.middleware.js
+├─ models/
+│ ├─ Session.model.js
+│ └─ User.model.js
+├─ routes/
+│ ├─ admin.routes.js
+│ ├─ index.js
+│ ├─ logout.routes.js
+│ ├─ refresh.routes.js
+│ ├─ session.routes.js
+│ └─ user.routes.js
+├─ services/
+│ ├─ refresh.service.js
+│ ├─ session.service.js
+│ └─ user.service.js
+├─ utils/
+│ ├─ ApiError.js
+│ └─ jwt.js
+├─ validators/
+│ ├─ session.validator.js
+│ └─ user.validator.js
+├─ app.js
+└─ server.js
+
+
+
+
+---
+
+## 🔹 Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/hamidukarimi/authforge-express.git
+cd authforge-express
+Install dependencies:
+
+npm install
+Set up your environment variables. Create a .env file:
+
+PORT=5000
+NODE_ENV=development
+MONGO_URI=your_mongodb_uri
+JWT_ACCESS_SECRET=your_access_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+JWT_ACCESS_EXPIRES_IN=10m
+JWT_REFRESH_EXPIRES_IN=7d
+
+🔹 Running the Server
+Development mode (with nodemon):
+
+npm run dev
+Production mode:
+
+npm start
+Your server will run on http://localhost:5000 by default.
+
+🔹 API Overview
+Authentication Routes
+Route	Method	Description
+/api/users/	POST	Register a new user
+/api/sessions/	POST	Login user, returns access & refresh tokens
+/api/logout/	POST	Logout current session
+/api/logout/logoutAll	POST	Logout all sessions for user
+/api/token/	POST	Get new access token using refresh token
+/api/users/me/password	PUT	Change password (authenticated)
+Headers
+Authorization: Bearer <access_token> (for protected routes)
+
+Content-Type: application/json
+
+Example: Login
+Request:
+
+POST /api/sessions/
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+Response:
+
+{
+  "success": true,
+  "message": "User logged in successfully",
+  "data": {
+    "user": {
+      "_id": "64f1a2b3c4d5e6f7g8h9",
+      "name": "John Doe",
+      "email": "user@example.com",
+      "role": "user"
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIsIn..."
+  }
+}
+Refresh token will be sent as HttpOnly cookie.
+
+🔹 Contribution
+This project is open-source!
+Feel free to fork, submit PRs, or open issues for improvements.
+
+Fork the repo
+
+Create a new branch: git checkout -b feature/my-feature
+
+Commit changes: git commit -m "feat: My feature"
+
+Push: git push origin feature/my-feature
+
+Open a pull request
+
+🔹 License
+This project is licensed under the MIT License. See LICENSE for details.
+
+🔹 Notes
+Designed as a production-ready backend for authentication services.
+
+Easily extensible with email verification, password reset, or OAuth providers in the future.
+
+Ensure environment variables are properly set before deployment.
+
+Protect your JWT secrets and never commit them to public repos.
+
+Made with ❤️ by Hamid Karimi

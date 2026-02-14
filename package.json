@@ -1,8 +1,9 @@
 {
   "name": "authforge-express",
   "version": "1.0.0",
+  "description": "A production-ready Node.js + Express.js authentication backend with JWT, sessions, and role-based authorization.",
   "type": "module",
-  "main": "index.js",
+  "main": "src/app.js",
   "directories": {
     "test": "tests"
   },
@@ -11,9 +12,8 @@
     "start": "node src/server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Hamid Karimi",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
