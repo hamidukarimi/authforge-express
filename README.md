@@ -38,48 +38,45 @@ It includes JWT-based authentication, refresh tokens with database sessions, rol
 
 ## 🔹 Project Structure
 
+```bash
 src/
 ├─ config/
-│ ├─ db.js
-│ └─ env.js
+│  ├─ db.js
+│  └─ env.js
 ├─ controllers/
-│ ├─ logout.controller.js
-│ ├─ refresh.controller.js
-│ ├─ session.controller.js
-│ └─ user.controller.js
+│  ├─ logout.controller.js
+│  ├─ refresh.controller.js
+│  ├─ session.controller.js
+│  └─ user.controller.js
 ├─ middlewares/
-│ ├─ auth.middleware.js
-│ ├─ error.middleware.js
-│ ├─ rateLimit.middleware.js
-│ ├─ role.middleware.js
-│ └─ validate.middleware.js
+│  ├─ auth.middleware.js
+│  ├─ error.middleware.js
+│  ├─ rateLimit.middleware.js
+│  ├─ role.middleware.js
+│  └─ validate.middleware.js
 ├─ models/
-│ ├─ Session.model.js
-│ └─ User.model.js
+│  ├─ Session.model.js
+│  └─ User.model.js
 ├─ routes/
-│ ├─ admin.routes.js
-│ ├─ index.js
-│ ├─ logout.routes.js
-│ ├─ refresh.routes.js
-│ ├─ session.routes.js
-│ └─ user.routes.js
+│  ├─ admin.routes.js
+│  ├─ index.js
+│  ├─ logout.routes.js
+│  ├─ refresh.routes.js
+│  ├─ session.routes.js
+│  └─ user.routes.js
 ├─ services/
-│ ├─ refresh.service.js
-│ ├─ session.service.js
-│ └─ user.service.js
+│  ├─ refresh.service.js
+│  ├─ session.service.js
+│  └─ user.service.js
 ├─ utils/
-│ ├─ ApiError.js
-│ └─ jwt.js
+│  ├─ ApiError.js
+│  └─ jwt.js
 ├─ validators/
-│ ├─ session.validator.js
-│ └─ user.validator.js
+│  ├─ session.validator.js
+│  └─ user.validator.js
 ├─ app.js
 └─ server.js
-
-
-
-
----
+```
 
 ## 🔹 Installation
 
