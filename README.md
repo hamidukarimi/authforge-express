@@ -88,7 +88,9 @@ cd authforge-express
 Install dependencies:
 
 npm install
-Set up your environment variables. Create a .env file:
+
+⚠️ **Important:** You **must** create a `.env` file in the root of the project before running the app.  
+You can copy from `.env.example` or below variables:
 
 PORT=5000
 NODE_ENV=development
@@ -173,5 +175,10 @@ Easily extensible with email verification, password reset, or OAuth providers in
 Ensure environment variables are properly set before deployment.
 
 Protect your JWT secrets and never commit them to public repos.
+
+## ⭐ Support
+
+If you like this project and find it useful, please consider giving it a star ⭐ on GitHub! It really helps and motivates me to keep improving it.
+
 
 Made with ❤️ by Hamid Karimi
