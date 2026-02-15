@@ -16,16 +16,23 @@ Click the **Fork** button at the top-right of the repository page.
 ```bash
 git clone https://github.com/hamidukarimi/authforge-express.git
 cd authforge-express
+```
 3️⃣ Install Dependencies
+```bash
 npm install
+```
 4️⃣ Setup Environment Variables
 Create a .env file in the root directory using .env.example as reference.
 
+```bash
 cp .env.example .env
+```
 Update values as needed (MongoDB URI, JWT secrets, etc).
 
 5️⃣ Run the Project
+```bash
 npm run dev
+```
 The server should now be running locally.
 
 🛠 How to Contribute
@@ -55,15 +62,21 @@ Mention any potential alternatives
 🔀 Submitting a Pull Request
 Create a new branch:
 
+```bash
 git checkout -b feature/your-feature-name
+```
 Make your changes.
 
 Commit clearly and descriptively:
 
+```bash
 git commit -m "feat: add X feature"
+```
 Push your branch:
 
+```bash
 git push origin feature/your-feature-name
+```
 Open a Pull Request to the main branch.
 
 📏 Coding Guidelines
