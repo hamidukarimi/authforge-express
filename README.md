@@ -2,37 +2,36 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A **production-ready, open-source authentication backend** built with **Node.js**, **Express.js**, and **MongoDB**.  
-It includes JWT-based authentication, refresh tokens with database sessions, role-based access control, rate limiting, and password management. Designed for **real-world projects** and easily extendable.
+An open-source authentication backend built with **Node.js**, **Express.js**, and **MongoDB**.  
+It includes JWT-based authentication, refresh tokens with database sessions, role-based access control, rate limiting, and password management. Designed for real-world projects and easily extendable.
 
 ---
 
 ## 🔹 Features
 
-- ✅ **User registration & login** with hashed passwords  
-- ✅ **JWT authentication** (access + refresh tokens)  
-- ✅ **Database-backed refresh tokens** (sessions stored in MongoDB)  
-- ✅ **Role-based authorization** (`user` & `admin`)  
-- ✅ **Password change & session invalidation**  
-- ✅ **Logout & logout-all devices**  
-- ✅ **Rate limiting per IP** (prevents brute force login)  
-- ✅ **Error handling with standardized `ApiError`**  
-- ✅ **Environment configuration centralization** (`env.js`)  
-- ✅ **RESTful API design**  
-- ✅ **Ready for production deployment**  
+- ✅ User registration & login with hashed passwords  
+- ✅ JWT authentication (access + refresh tokens)  
+- ✅ Database-backed refresh tokens (sessions stored in MongoDB)  
+- ✅ Role-based authorization (`user` & `admin`)  
+- ✅ Password change & session invalidation  
+- ✅ Logout & logout-all devices  
+- ✅ Rate limiting per IP (prevents brute force login)  
+- ✅ Error handling with standardized `ApiError`  
+- ✅ Environment configuration centralization (`env.js`)  
+- ✅ RESTful API design  
 
 ---
 
 ## 🔹 Tech Stack
 
-- **Node.js** (v18+)  
-- **Express.js**  
-- **MongoDB** (local or Atlas)  
-- **Mongoose**  
-- **JWT** for authentication  
-- **Bcrypt** for password hashing  
-- **dotenv** for environment variables  
-- **Nodemon** for development  
+- Node.js (v18+)  
+- Express.js  
+- MongoDB (local or Atlas)  
+- Mongoose  
+- JWT for authentication  
+- Bcrypt for password hashing  
+- dotenv for environment variables  
+- Nodemon for development  
 
 ---
 
@@ -78,20 +77,32 @@ src/
 └─ server.js
 ```
 
-## 🔹 Installation
 
-1. Clone the repository:
+🔹 Installation
+1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/hamidukarimi/authforge-express.git
 cd authforge-express
-Install dependencies:
 
+```
+2️⃣ Install dependencies
+```bash
 npm install
+```
 
-⚠️ **Important:** You **must** create a `.env` file in the root of the project before running the app.  
-You can copy from `.env.example` or below variables:
+3️⃣ Create .env file
 
+You must create a .env file in the root of the project.
+
+You can copy from .env.example:
+
+```bash
+cp .env.example .env
+```
+Or manually create one with:
+
+```bash
 PORT=5000
 NODE_ENV=development
 MONGO_URI=your_mongodb_uri
@@ -99,42 +110,60 @@ JWT_ACCESS_SECRET=your_access_secret
 JWT_REFRESH_SECRET=your_refresh_secret
 JWT_ACCESS_EXPIRES_IN=10m
 JWT_REFRESH_EXPIRES_IN=7d
+```
 
 🔹 Running the Server
-Development mode (with nodemon):
+Development mode (with nodemon)
 
+```bash
 npm run dev
-Production mode:
-
+```
+roduction mode
+```bash
 npm start
-Your server will run on http://localhost:5000 by default.
+```
+
+By default, the server runs on:
+```bash
+http://localhost:5000
+```
 
 🔹 API Overview
 Authentication Routes
-Route	Method	Description
-/api/users/	POST	Register a new user
-/api/sessions/	POST	Login user, returns access & refresh tokens
-/api/logout/	POST	Logout current session
-/api/logout/logoutAll	POST	Logout all sessions for user
-/api/token/	POST	Get new access token using refresh token
-/api/users/me/password	PUT	Change password (authenticated)
+
+| Route                    | Method | Description                                  |
+| ------------------------ | ------ | -------------------------------------------- |
+| `/api/users/`            | POST   | Register a new user                          |
+| `/api/sessions/`         | POST   | Login user (returns access & refresh tokens) |
+| `/api/logout/`           | POST   | Logout current session                       |
+| `/api/logout/logoutAll`  | POST   | Logout all sessions                          |
+| `/api/token/`            | POST   | Get new access token using refresh token     |
+| `/api/users/me/password` | PUT    | Change password (authenticated)              |
+
 Headers
-Authorization: Bearer <access_token> (for protected routes)
 
+```bash
+Authorization: Bearer <access_token>
 Content-Type: application/json
-
-Example: Login
-Request:
-
+```
+🔹 Example: Login
+Request
+```bash
 POST /api/sessions/
 Content-Type: application/json
 
+```
+
+```bash
 {
   "email": "user@example.com",
   "password": "password123"
 }
-Response:
 
+```
+
+Response
+```bash
 {
   "success": true,
   "message": "User logged in successfully",
@@ -148,37 +177,36 @@ Response:
     "accessToken": "eyJhbGciOiJIUzI1NiIsIn..."
   }
 }
-Refresh token will be sent as HttpOnly cookie.
+```
+🔹 Contributing
 
-🔹 Contribution
-This project is open-source!
-Feel free to fork, submit PRs, or open issues for improvements.
+This project is open-source.
 
-Fork the repo
+You are welcome to fork, submit pull requests, or open issues.
 
-Create a new branch: git checkout -b feature/my-feature
-
-Commit changes: git commit -m "feat: My feature"
-
-Push: git push origin feature/my-feature
-
-Open a pull request
+```bash
+git checkout -b feature/my-feature
+git commit -m "feat: add my feature"
+git push origin feature/my-feature
+```
+Then open a Pull Request.
 
 🔹 License
-This project is licensed under the MIT License. See LICENSE for details.
+
+This project is licensed under the MIT License.
+See the LICENSE file for details.
 
 🔹 Notes
-Designed as a production-ready backend for authentication services.
 
-Easily extensible with email verification, password reset, or OAuth providers in the future.
+Easily extensible with email verification, password reset, or OAuth providers.
 
-Ensure environment variables are properly set before deployment.
+Ensure environment variables are properly configured before deployment.
 
-Protect your JWT secrets and never commit them to public repos.
+Never commit JWT secrets to public repositories.
 
-## ⭐ Support
 
-If you like this project and find it useful, please consider giving it a star ⭐ on GitHub! It really helps and motivates me to keep improving it.
+⭐ Support
 
+If you find this project useful, consider giving it a star ⭐ on GitHub.
 
 Made with ❤️ by Hamid Karimi
