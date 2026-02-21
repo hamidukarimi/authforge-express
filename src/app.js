@@ -15,19 +15,30 @@ const app = express();
 // Global Middlewares
 // =======================
 
-app.use(helmet()); // Security headers
+app.use(helmet());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow Postman, curl
+
+      const allowedOrigins = [env.clientUrl];
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-  }),
+  })
 );
-app.use(express.json()); // Parse JSON
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 if (env.nodeEnv === "development") {
-  app.use(morgan("dev")); // Logging only in dev
+  app.use(morgan("dev"));
 }
 
 app.use("/api", routes);

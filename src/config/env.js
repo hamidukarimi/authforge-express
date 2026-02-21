@@ -1,31 +1,46 @@
 import dotenv from "dotenv";
+import { z } from "zod";
 
 dotenv.config();
 
-const requiredEnvVars = [
-  "PORT",
-  "NODE_ENV",
-  "MONGO_URI",
-  "JWT_ACCESS_SECRET",
-  "JWT_REFRESH_SECRET",
-  "JWT_ACCESS_EXPIRES_IN",
-  "JWT_REFRESH_EXPIRES_IN",
-];
+const envSchema = z.object({
+  PORT: z
+    .string()
+    .default("5000")
+    .transform((val) => parseInt(val, 10)),
 
-requiredEnvVars.forEach((key) => {
-  if (!process.env[key]) {
-    throw new Error(`Missing required environment variable: ${key}`);
-  }
+  NODE_ENV: z
+    .enum(["development", "production", "test"])
+    .default("development"),
+
+  MONGO_URI: z.string().min(1, "MONGO_URI is required"),
+
+  JWT_ACCESS_SECRET: z.string().min(1, "JWT_ACCESS_SECRET is required"),
+  JWT_REFRESH_SECRET: z.string().min(1, "JWT_REFRESH_SECRET is required"),
+
+  JWT_ACCESS_EXPIRES_IN: z.string().min(1, "JWT_ACCESS_EXPIRES_IN is required"),
+  JWT_REFRESH_EXPIRES_IN: z.string().min(1, "JWT_REFRESH_EXPIRES_IN is required"),
+
+  CLIENT_URL: z.string().url("CLIENT_URL must be a valid URL"),
 });
 
+const parsedEnv = envSchema.safeParse(process.env);
+
+if (!parsedEnv.success) {
+  console.error("Invalid environment variables:");
+  console.error(parsedEnv.error.format());
+  process.exit(1);
+}
+
 const env = {
-  port: process.env.PORT,
-  nodeEnv: process.env.NODE_ENV || "development",
-  mongoUri: process.env.MONGO_URI,
-  jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
-  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
-  jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN,
-  jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
+  port: parsedEnv.data.PORT,
+  nodeEnv: parsedEnv.data.NODE_ENV,
+  mongoUri: parsedEnv.data.MONGO_URI,
+  jwtAccessSecret: parsedEnv.data.JWT_ACCESS_SECRET,
+  jwtRefreshSecret: parsedEnv.data.JWT_REFRESH_SECRET,
+  jwtAccessExpiresIn: parsedEnv.data.JWT_ACCESS_EXPIRES_IN,
+  jwtRefreshExpiresIn: parsedEnv.data.JWT_REFRESH_EXPIRES_IN,
+  clientUrl: parsedEnv.data.CLIENT_URL,
 };
 
 export default env;

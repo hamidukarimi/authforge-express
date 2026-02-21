@@ -1,6 +1,7 @@
 import { createUser } from "../services/user.service.js";
 import { changePassword } from "../services/user.service.js";
 import env from "../config/env.js";
+import ms from "ms";
 
 export const create = async (req, res, next) => {
   try {
@@ -10,7 +11,7 @@ export const create = async (req, res, next) => {
       httpOnly: true,
       secure: env.nodeEnv === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days (example)
+      maxAge: ms(env.jwtRefreshExpiresIn)
     });
 
     res.status(201).json({
@@ -33,7 +34,7 @@ export const create = async (req, res, next) => {
 
 export const updatePassword = async (req, res, next) => {
   try {
-    const userId = req.user._id; // Protected route: user must be authenticated
+    const userId = req.user._id;
     const { currentPassword, newPassword } = req.body;
 
     const result = await changePassword(userId, currentPassword, newPassword);

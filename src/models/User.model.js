@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
-      select: false, // very important (hide by default)
+      select: false,
     },
     tokenVersion: {
       type: Number,
@@ -106,15 +106,23 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 // ==========================
 //
 
-userSchema.methods.toJSON = function () {
-  const userObject = this.toObject();
-  delete userObject.password;
-  delete userObject.passwordResetToken;
-  delete userObject.passwordResetExpires;
-  delete userObject.emailVerificationToken;
-  delete userObject.emailVerificationExpires;
-  return userObject;
-};
+userSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    delete ret.password;
+    delete ret.tokenVersion;
+    delete ret.passwordResetToken;
+    delete ret.passwordResetExpires;
+    delete ret.emailVerificationToken;
+    delete ret.emailVerificationExpires;
+    delete ret.__v;
+
+    ret.id = ret._id;
+    delete ret._id;
+
+    return ret;
+  },
+});
+
 
 const User = mongoose.model("User", userSchema);
 

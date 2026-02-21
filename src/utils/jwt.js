@@ -11,7 +11,7 @@ export const generateAccessToken = (user) => {
     },
     env.jwtAccessSecret,
     {
-      expiresIn: env.jwtAccessExpiresIn || "10s",
+      expiresIn: env.jwtAccessExpiresIn || "5m",
       issuer: "your-app-name",
       audience: "your-app-users",
     },

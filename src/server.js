@@ -8,7 +8,7 @@ const PORT = env.port || 5000;
 
 const startServer = async () => {
   try {
-    await connectDB(); // Connect DB first
+    await connectDB();
 
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);

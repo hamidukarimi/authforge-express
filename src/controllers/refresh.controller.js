@@ -2,6 +2,7 @@
 
 import { handleRefreshToken } from "../services/refresh.service.js";
 import env from "../config/env.js";
+import ms from "ms";
 
 export const refresh = async (req, res, next) => {
   try {
@@ -9,15 +10,13 @@ export const refresh = async (req, res, next) => {
 
     const result = await handleRefreshToken(oldRefreshToken, req);
 
-    // 🍪 Set new refresh token in HttpOnly cookie
     res.cookie("refreshToken", result.refreshToken, {
       httpOnly: true,
       secure: env.nodeEnv === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      maxAge: ms(env.jwtRefreshExpiresIn)
     });
 
-    // ❗ Only send new access token in response body
     res.status(200).json({
       accessToken: result.accessToken
     });

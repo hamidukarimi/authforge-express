@@ -41,11 +41,16 @@ export const createUser = async (userData) => {
 export const changePassword = async (userId, currentPassword, newPassword) => {
   const user = await User.findById(userId).select("+password");
 
-  if (!user) throw { status: 404, message: "User not found" };
+   if (!user) {
+      throw new ApiError(404, "User not found");
+    }
 
   // Verify current password
   const isMatch = await user.comparePassword(currentPassword);
-  if (!isMatch) throw { status: 401, message: "Current password is incorrect" };
+
+   if (!isMatch) {
+      throw new ApiError(401, "Current password is incorrect");
+    }
 
   // Update password
   user.password = newPassword;

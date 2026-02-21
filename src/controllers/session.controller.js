@@ -1,5 +1,6 @@
 import { createSession } from "../services/session.service.js";
 import env from "../config/env.js";
+import ms from "ms";
 
 export const create = async (req, res, next) => {
   try {
@@ -12,7 +13,7 @@ const result = await createSession(email, password, req);
       httpOnly: true,
       secure: env.nodeEnv === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days (example)
+      maxAge: ms(env.jwtRefreshExpiresIn)
     });
 
     res.status(200).json({

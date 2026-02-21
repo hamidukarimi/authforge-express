@@ -22,12 +22,10 @@ const sessionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// 🍀 Hash and set refresh token
 sessionSchema.methods.setRefreshToken = function (refreshToken) {
   this.refreshTokenHash = crypto.createHash("sha256").update(refreshToken).digest("hex");
 };
 
-// 🍀 Compare provided token with hashed token
 sessionSchema.methods.compareRefreshToken = function (refreshToken) {
   const hash = crypto.createHash("sha256").update(refreshToken).digest("hex");
   return hash === this.refreshTokenHash;
