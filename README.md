@@ -9,29 +9,29 @@ It includes JWT-based authentication, refresh tokens with database sessions, rol
 
 ## 🔹 Features
 
-- ✅ User registration & login with hashed passwords  
-- ✅ JWT authentication (access + refresh tokens)  
-- ✅ Database-backed refresh tokens (sessions stored in MongoDB)  
-- ✅ Role-based authorization (`user` & `admin`)  
-- ✅ Password change & session invalidation  
-- ✅ Logout & logout-all devices  
-- ✅ Rate limiting per IP (prevents brute force login)  
-- ✅ Error handling with standardized `ApiError`  
-- ✅ Environment configuration centralization (`env.js`)  
-- ✅ RESTful API design  
+- ✅ User registration & login with hashed passwords
+- ✅ JWT authentication (access + refresh tokens)
+- ✅ Database-backed refresh tokens (sessions stored in MongoDB)
+- ✅ Role-based authorization (`user` & `admin`)
+- ✅ Password change & session invalidation
+- ✅ Logout & logout-all devices
+- ✅ Rate limiting per IP (prevents brute force login)
+- ✅ Error handling with standardized `ApiError`
+- ✅ Environment configuration centralization (`env.js`)
+- ✅ RESTful API design
 
 ---
 
 ## 🔹 Tech Stack
 
-- Node.js (v18+)  
-- Express.js  
-- MongoDB (local or Atlas)  
-- Mongoose  
-- JWT for authentication  
-- Bcrypt for password hashing  
-- dotenv for environment variables  
-- Nodemon for development  
+- Node.js (v18+)
+- Express.js
+- MongoDB (local or Atlas)
+- Mongoose
+- JWT for authentication
+- Bcrypt for password hashing
+- dotenv for environment variables
+- Nodemon for development
 
 ---
 
@@ -77,7 +77,6 @@ src/
 └─ server.js
 ```
 
-
 🔹 Installation
 1️⃣ Clone the repository
 
@@ -86,7 +85,9 @@ git clone https://github.com/hamidukarimi/authforge-express.git
 cd authforge-express
 
 ```
+
 2️⃣ Install dependencies
+
 ```bash
 npm install
 ```
@@ -100,6 +101,7 @@ You can copy from .env.example:
 ```bash
 cp .env.example .env
 ```
+
 Or manually create one with:
 
 ```bash
@@ -118,12 +120,15 @@ Development mode (with nodemon)
 ```bash
 npm run dev
 ```
+
 roduction mode
+
 ```bash
 npm start
 ```
 
 By default, the server runs on:
+
 ```bash
 http://localhost:5000
 ```
@@ -146,8 +151,10 @@ Headers
 Authorization: Bearer <access_token>
 Content-Type: application/json
 ```
+
 🔹 Example: Login
 Request
+
 ```bash
 POST /api/sessions/
 Content-Type: application/json
@@ -163,6 +170,7 @@ Content-Type: application/json
 ```
 
 Response
+
 ```bash
 {
   "success": true,
@@ -178,6 +186,7 @@ Response
   }
 }
 ```
+
 🔹 Contributing
 
 This project is open-source.
@@ -189,6 +198,7 @@ git checkout -b feature/my-feature
 git commit -m "feat: add my feature"
 git push origin feature/my-feature
 ```
+
 Then open a Pull Request.
 
 🔹 License
@@ -203,7 +213,6 @@ Easily extensible with email verification, password reset, or OAuth providers.
 Ensure environment variables are properly configured before deployment.
 
 Never commit JWT secrets to public repositories.
-
 
 ⭐ Support
 

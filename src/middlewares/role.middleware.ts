@@ -1,9 +1,12 @@
-// src/middlewares/role.middleware.js
+import type { RequestHandler } from "express";
+import type { IUser } from "../models/User.model.js";
 import ApiError from "../utils/ApiError.js";
 
+type UserRole = IUser["role"];
+
 const authorize =
-  (...allowedRoles) =>
-  (req, res, next) => {
+  (...allowedRoles: UserRole[]): RequestHandler =>
+  (req, _res, next) => {
     try {
       if (!req.user) {
         throw new ApiError(401, "No user attached to request.");

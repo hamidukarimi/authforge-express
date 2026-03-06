@@ -1,11 +1,10 @@
-import express from "express";
-
+import { Router } from "express";
 import userRoutes from "./user.routes.js";
 import sessionRoutes from "./session.routes.js";
 import refreshRoutes from "./refresh.routes.js";
 import logoutRoutes from "./logout.routes.js";
 
-const router = express.Router();
+const router = Router();
 
 router.use("/users", userRoutes);
 router.use("/sessions", sessionRoutes);

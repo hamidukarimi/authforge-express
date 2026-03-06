@@ -1,29 +1,29 @@
-// src/middlewares/auth.middleware.js
-
 import jwt from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
+import type { RequestHandler } from "express";
 import User from "../models/User.model.js";
 import ApiError from "../utils/ApiError.js";
 import env from "../config/env.js";
 
-const protect = async (req, res, next) => {
+const protect: RequestHandler = async (req, _res, next) => {
   try {
-    let token;
+    const authHeader = req.headers.authorization;
 
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
-    ) {
-      token = req.headers.authorization.split(" ")[1];
+    if (!authHeader?.startsWith("Bearer ")) {
+      throw new ApiError(401, "Not authorized. No token provided.");
     }
+
+    const token = authHeader.split(" ")[1];
 
     if (!token) {
       throw new ApiError(401, "Not authorized. No token provided.");
     }
 
-    const decoded = jwt.verify(
-      token,
-      env.jwtAccessSecret
-    );
+    const decoded = jwt.verify(token, env.jwtAccessSecret) as JwtPayload;
+
+    if (!decoded.sub) {
+      throw new ApiError(401, "Invalid token payload.");
+    }
 
     const user = await User.findById(decoded.sub);
 

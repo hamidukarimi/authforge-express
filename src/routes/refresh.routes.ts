@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 import * as refreshController from "../controllers/refresh.controller.js";
 
-const router = express.Router();
+const router = Router();
 
 router.post("/", refreshController.refresh);
 
